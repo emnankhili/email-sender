@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: email-sender-api
+    env: python
+    buildCommand: ""
+    startCommand: python email_sender.py
+    plan: free
