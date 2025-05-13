@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import smtplib
 from email.message import EmailMessage
+import os
 
 app = Flask(__name__)
 
@@ -18,14 +19,17 @@ def send_email():
         email["Subject"] = subject
         email.set_content(message)
 
+        # Use environment variable for Gmail password (App Password or OAuth2)
+        gmail_password = os.getenv("GMAIL_APP_PASSWORD")
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            smtp.login("Gainz@gmail.com", "your_app_password")
+            smtp.login("Gainz@gmail.com", gmail_password)
             smtp.send_message(email)
 
         return jsonify({"status": "success"}), 200
 
     except Exception as e:
+        app.logger.error(f"Error: {str(e)}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
