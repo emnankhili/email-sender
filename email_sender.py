@@ -14,15 +14,15 @@ def send_email():
 
     try:
         email = EmailMessage()
-        email["From"] = "Gainz@gmail.com"
+        email["From"] = "emnankhili12@gmail.com"
         email["To"] = receiver
         email["Subject"] = subject
         email.set_content(message)
 
         # Use environment variable for Gmail password (App Password or OAuth2)
-        gmail_password = os.getenv("GMAIL_APP_PASSWORD")
+        gmail_password = os.getenv("BacMath12")
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            smtp.login("Gainz@gmail.com", gmail_password)
+            smtp.login("emnankhili12@gmail.com", gmail_password)
             smtp.send_message(email)
 
         return jsonify({"status": "success"}), 200
